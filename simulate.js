@@ -11,7 +11,7 @@ var Simulate = {
     event: function(element, eventName){
         if (document.createEvent) {
             var evt = document.createEvent("HTMLEvents")
-            evt.initEvent(eventName, true, true )
+            evt.initEvent(eventName, events[eventName].bubbles, events[eventName].cancelable)
             element.dispatchEvent(evt)
         }else{
             var evt = document.createEventObject()
@@ -73,35 +73,34 @@ Simulate.keyup = function(element, chr){
     })
 }
 
-var events = [
-    'click',
-    'focus',
-    'blur',
-    'focusin',
-    'focusout',
-    'dblclick',
-    'input',
-    'change',
-    'mousedown',
-    'mousemove',
-    'mouseout',
-    'mouseover',
-    'mouseup',
-    'resize',
-    'scroll',
-    'select',
-    'submit',
-    'load',
-    'unload'
-]
+var events = {
+    click: { bubbles: true, cancelable: true },
+    focus: { bubbles: false, cancelable: false },
+    blur: { bubbles: false, cancelable: false },
+    focusin: { bubbles: true, cancelable: false },
+    focusout: { bubbles: true, cancelable: false },
+    dblclick: { bubbles: true, cancelable: true },
+    input: { bubbles: true, cancelable: false },
+    change: { bubbles: true, cancelable: false },
+    mousedown: { bubbles: true, cancelable: true },
+    mousemove: { bubbles: true, cancelable: true },
+    mouseout: { bubbles: true, cancelable: true },
+    mouseover: { bubbles: true, cancelable: true },
+    mouseup: { bubbles: true, cancelable: true },
+    resize: { bubbles: true, cancelable: true },
+    scroll: { bubbles: false, cancelable: false },
+    select: { bubbles: false, cancelable: false },
+    submit: { bubbles: true, cancelable: true },
+    load: { bubbles: false, cancelable: false },
+    unload: { bubbles: false, cancelable: false }
+}
 
-for (var i = events.length; i--;){
-    var event = events[i]
-    Simulate[event] = (function(evt){
+for (var eventName in events){
+    Simulate[eventName] = (function(eventName){
         return function(element){
-            this.event(element, evt)
+            this.event(element, eventName)
         }
-    }(event))
+    }(eventName))
 }
 
 if (typeof module !== 'undefined'){
