@@ -87,6 +87,8 @@ var events = {
     mouseout: { bubbles: true, cancelable: true },
     mouseover: { bubbles: true, cancelable: true },
     mouseup: { bubbles: true, cancelable: true },
+    mouseenter: { bubbles: false, cancelable: false },
+    mouseleave: { bubbles: false, cancelable: false },
     resize: { bubbles: true, cancelable: true },
     scroll: { bubbles: false, cancelable: false },
     select: { bubbles: false, cancelable: false },
