@@ -10,8 +10,9 @@ function extend(dst, src){
 var Simulate = {
     event: function(element, eventName){
         if (document.createEvent) {
-            var evt = document.createEvent("HTMLEvents")
-            evt.initEvent(eventName, events[eventName].bubbles, events[eventName].cancelable)
+            var evt = document.createEvent("HTMLEvents"),
+                evtParams = events[eventName] || { bubbles: true, cancelable: true };
+            evt.initEvent(eventName, evtParams.bubbles, evtParams.cancelable)
             element.dispatchEvent(evt)
         }else{
             var evt = document.createEventObject()
